@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -108,7 +109,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 
 # Database
-# Defaults to local SQLite; Railway will provide DATABASE_URL in production
+# Defaults to local SQLite; Render/Neon provide DATABASE_URL in production
 # and dj_database_url parses that connection string automatically.
 
 DATABASES = {
@@ -139,11 +140,13 @@ USE_TZ = True
 # Static files
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# Email — Gmail SMTP (wired properly in Phase 4, placeholder for now)
+# Email — Gmail SMTP
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
